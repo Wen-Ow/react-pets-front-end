@@ -1,32 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 
-const PetList = (props) => {
-  console.log(props);
+const PetForm = ({ handleAddPet, selected, handleUpdatePet }) => {
+  // state to track form data
+  const initialState = {
+    name: "",
+    age: "",
+    breed: "",
+  };
+
+  const [formData, setFormData] = useState(selected ? selected : initialState);
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    // if selected is not null, we need to run a new updatePetfunction
+    selected ? handleUpdatePet(formData) : handleAddPet(formData);
+  };
+
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+
   return (
     <div>
-      <h1>Pet List</h1>
-      <div>
-        {!props.pets.length ? (
-          <h2> No pets yet</h2>
-        ) : (
-          <ul>
-            {props.pets.map((pet) => {
-              return (
-                <li
-                  style={{ cursor: "pointer", color: "#646CFF" }}
-                  key={pet._id}
-                  onClick={() => props.handleSelect(pet)}
-                >
-                  {pet.name}
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </div>
-      <button onClick={props.handleFormView}>{props.isFormOpen ? "Close Form" : "New Pet"}</button>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="name">Name</label>
+        <input type="text" id="name" name="name" onChange={handleChange} value={formData.name} />
+        <label htmlFor="age">Age</label>
+        <input type="text" id="age" name="age" onChange={handleChange} value={formData.age} />
+        <label htmlFor="breed">Breed</label>
+        <input type="text" id="breed" name="breed" onChange={handleChange} value={formData.breed} />
+        <button type="submit">{selected ? "Update Pet" : "Add New Pet"}</button>
+      </form>
     </div>
   );
 };
 
-export default PetList;
+export default PetForm;

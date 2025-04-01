@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 
-const PetForm = ({ handleAddPet }) => {
+const PetForm = ({ handleAddPet, selected, handleUpdatePet }) => {
   // state to track form data
-  const [formData, setFormData] = useState({
+  const initialState = {
     name: "",
     age: "",
     breed: "",
-  });
+  };
+
+  const [formData, setFormData] = useState(selected ? selected : initialState);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    handleAddPet(formData);
+    // if selected is not null, we need to run a new updatePetfunction
+    selected ? handleUpdatePet(formData) : handleAddPet(formData);
   };
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,7 +27,7 @@ const PetForm = ({ handleAddPet }) => {
         <input type="text" id="age" name="age" onChange={handleChange} value={formData.age} />
         <label htmlFor="breed">Breed</label>
         <input type="text" id="breed" name="breed" onChange={handleChange} value={formData.breed} />
-        <button type="submit">Add New Pet</button>
+        <button type="submit">{selected ? "Update Pet" : "Add New Pet"}</button>
       </form>
     </div>
   );

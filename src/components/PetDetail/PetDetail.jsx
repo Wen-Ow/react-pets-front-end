@@ -11,6 +11,10 @@ const PetDetail = (props) => {
       <h2>Name: {props.selected.name}</h2>
       <p>Age: {props.selected.age} </p>
       <p>Breed: {props.selected.breed} </p>
+      <div>
+        <button onClick={() => props.handleFormView(props.selected)}>Edit Pet</button>
+        <button onClick={() => props.handleDelete(props.selected._id)}>Delete Pet</button>
+      </div>
     </div>
   );
 };
