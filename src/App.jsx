@@ -88,7 +88,13 @@ function App() {
 
   return (
     <>
-      <PetList pets={pets} handleSelect={handleSelect} handleFormView={handleFormView} isFormOpen={isFormOpen} />
+      <PetList
+        pets={pets}
+        handleAddPet={handleAddPet}
+        handleSelect={handleSelect}
+        handleFormView={handleFormView}
+        isFormOpen={isFormOpen}
+      />
       {isFormOpen ? (
         <PetForm handleAddPet={handleAddPet} handleUpdatePet={handleUpdatePet} selected={selected} />
       ) : (
